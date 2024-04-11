@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tree Puzzle</title>
+    <style>
+      /* Add any CSS styling here */
+      .tree-container {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 50px;
+        position: relative;
+      }
+
+      .tree {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px 200px 0;
+        position: relative;
+      }
+
+      .trunk {
+        width: 20px;
+        height: 400px;
+        background-color: brown;
+        position: relative;
+        z-index: 2;
+      }
+
+      .branch {
+        width: 10px;
+        height: 250px;
+        background-color: brown;
+        position: absolute;
+      }
+
+      .circle-container {
+        display: flex;
+        gap: 10px;
+        position: absolute;
+        bottom: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        z-index: 3; /* Ensure circles are above branches */
+      }
+
+      .grey {
+        background-color: grey;
+      }
+
+      .black {
+        background-color: black;
+      }
+
+      .orange {
+        background-color: orange;
+      }
+
+      /* Adjusted z-index for branches */
+      .branch:nth-child(1) {
+        top: -30px;
+        right: 90px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .branch:nth-child(2) {
+        top: 75px;
+        left: 90px;
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .branch:nth-child(3) {
+        top: 120px;
+        right: 90px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+      #submit-button {
+        background-color: #2778c4;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5%;
+        display: inline-block;
+        font-size: 16px;
+        /* margin-bottom: 20px; Adjusted margin */
+        cursor: pointer;
+        position: absolute;
+        bottom: 110px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tree-container">
+      <!-- First tree -->
+      <div class="tree" id="first_tree">
+        <div class="trunk">
+          <div class="branch three"></div>
+          <div class="branch three"></div>
+          <!-- <div class="branch three"></div> -->
+        </div>
+      </div>
+
+      <!-- Second tree -->
+      <div class="tree" id="second_tree">
+        <div class="trunk">
+          <div class="branch one g"></div>
+          <div class="branch one y"></div>
+          <div class="branch one b"></div>
+        </div>
+      </div>
+
+      <!-- Third tree -->
+      <div class="tree" id="third_tree">
+        <div class="trunk">
+          <div class="branch eleven g"></div>
+          <div class="branch seven y"></div>
+          <div class="branch eleven b"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="circle-container">
+      <div class="circle grey" draggable="true"></div>
+      <div class="circle black" draggable="true"></div>
+      <div class="circle orange" draggable="true"></div>
+    </div>
+    <button id="submit-button">Submit</button>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+      function dragStart(event) {
+        event.dataTransfer.setData("text", event.target.classList[1]); // Store the color of the dragged circle
+      }
+
+      function dragOver(event) {
+        event.preventDefault(); // Allow drop
+      }
+
+      function drop(event, Limit) {
+        event.preventDefault();
+        const color = event.dataTransfer.getData("text"); // Get the color of the dragged circle
+        const branch = event.target;
+
+        const newCircle = document.createElement("div");
+        newCircle.classList.add("circle", color);
+        branch.appendChild(newCircle);
+      }
+      function addCircles(branch) {
+        const newCircle = document.createElement("div");
+        newCircle.classList.add("circle");
+        branch.appendChild(newCircle);
+
+        // Add event listener to the branch to handle clicks on circles
+        branch.addEventListener("click", (event) => {
+          if (event.target.classList.contains("circle")) {
+            console.log("Circle clicked!"); // For debugging
+            event.target.parentNode.removeChild(event.target); // Remove the clicked circle
+          }
+        });
+      }
+
+      const circles = document.querySelectorAll(".circle");
+      const three = document.querySelectorAll(".three");
+      const eleven = document.querySelectorAll(".eleven");
+      const one = document.querySelectorAll(".one");
+      const seven = document.querySelectorAll(".seven");
+
+      circles.forEach((circle) => {
+        circle.addEventListener("dragstart", dragStart);
+      });
+
+      three.forEach((branch, index) => {
+        branch.addEventListener("dragover", dragOver);
+        branch.addEventListener("drop", (event) => drop(event, Infinity));
+
+        addCircles(branch);
+      });
+
+      one.forEach((branch, index) => {
+        branch.addEventListener("dragover", dragOver);
+        branch.addEventListener("drop", (event) => drop(event, Infinity));
+
+        addCircles(branch);
+      });
+
+      seven.forEach((branch, index) => {
+        branch.addEventListener("dragover", dragOver);
+        branch.addEventListener("drop", (event) => drop(event, Infinity));
+
+        addCircles(branch);
+      });
+
+      eleven.forEach((branch, index) => {
+        branch.addEventListener("dragover", dragOver);
+        branch.addEventListener("drop", (event) => drop(event, Infinity));
+
+        addCircles(branch);
+      });
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
