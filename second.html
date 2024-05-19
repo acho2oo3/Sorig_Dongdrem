@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tree Puzzle</title>
+    <style>
+      /* Add any CSS styling here */
+      .tree-container {
+        display: flex;
+        justify-content: space-between; /* Distribute space between trees */
+        align-items: flex-end; /* Align trees to the bottom */
+        width: 100%; /* Ensure the container spans the full width */
+        margin-top: 50px;
+        position: relative;
+      }
+      .navbar {
+        background-color: #2778c4;
+        overflow: hidden;
+      }
+
+      .navbar a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 1.5rem;
+      }
+      .active {
+        background-color: black;
+      }
+
+      .navbar a:hover {
+        background-color: #eb8025;
+      }
+
+      .tree {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px 100px 0;
+        position: relative;
+        margin-left: 50px;
+      }
+
+      .trunk {
+        width: 13px;
+        height: 400px;
+        background-color: brown;
+        position: relative;
+        z-index: 2;
+      }
+
+      .branch {
+        width: 7px;
+        height: 220px;
+        background-color: brown;
+        position: absolute;
+      }
+
+      .circle-container {
+        display: flex;
+        gap: 10px;
+        position: absolute;
+        bottom: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        z-index: 3; /* Ensure circles are above branches */
+      }
+
+      .grey {
+        background-color: #dcdddd;
+      }
+
+      .black {
+        background-color: black;
+      }
+
+      .orange {
+        background-color: #eb8025;
+      }
+
+      /* Adjusted z-index for branches */
+      .branch:nth-child(1) {
+        top: -10px;
+        right: -23px;
+        height: 70px;
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .branch:nth-child(2) {
+        top: 100px;
+        right: -23px;
+        height: 70px;
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .branch:nth-child(3) {
+        top: -60px;
+        right: 75px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+      .branch:nth-child(4) {
+        top: 200px;
+        right: -25px;
+        height: 90px;
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .branch:nth-child(5) {
+        top: 50px;
+        right: 75px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+      .branch:nth-child(6) {
+        top: 150px;
+        right: 75px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+      /* Adjusted z-index for branches */
+      .one:nth-child(2) {
+        top: 40px;
+        right: -20px;
+        height: 70px;
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .one:nth-child(3) {
+        top: 110px;
+        right: 26px;
+        height: 70px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .one:nth-child(1) {
+        top: -10px;
+        right: 26px;
+        height: 70px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+      .two:nth-child(2) {
+        top: 70px;
+        right: -20px;
+        height: 70px;
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .two:nth-child(3) {
+        top: 30px;
+        right: 26px;
+        height: 70px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .two:nth-child(1) {
+        top: -10px;
+        right: -20px;
+        height: 70px;
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+      .many:nth-child(1) {
+        top: calc(100% / 15 * 1 - 70px); /* Calculate top position */
+        right: -20px;
+        height: 70px; /* Calculate height for each branch */
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(2) {
+        top: calc(100% / 15 * 2 - 100px); /* Calculate top position */
+        right: 40px;
+        height: 100px; /* Calculate height for each branch */
+        transform: rotate(-40deg);
+
+        z-index: 1;
+      }
+
+      .many:nth-child(3) {
+        top: calc(100% / 15 * 3 - 70px); /* Calculate top position */
+        right: -20px;
+        height: 70px; /* Calculate height for each branch */
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(4) {
+        top: calc(100% / 15 * 4 - 100px); /* Calculate top position */
+        right: 40px;
+        height: 100px; /* Calculate height for each branch */
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(5) {
+        top: calc(100% / 15 * 5 - 70px); /* Calculate top position */
+        right: -20px;
+        height: 70px; /* Calculate height for each branch */
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(6) {
+        top: calc(100% / 15 * 6 - 100px); /* Calculate top position */
+        right: 40px;
+        height: 100px; /* Calculate height for each branch */
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(7) {
+        top: calc(100% / 15 * 7 - 80px); /* Calculate top position */
+        right: -25px;
+        height: 80px; /* Calculate height for each branch */
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(8) {
+        top: calc(100% / 15 * 8 - 100px); /* Calculate top position */
+        right: 40px;
+        height: 100px; /* Calculate height for each branch */
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(9) {
+        top: calc(100% / 15 * 9 - 70px); /* Calculate top position */
+        right: -20px;
+        height: 70px; /* Calculate height for each branch */
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(10) {
+        top: calc(100% / 15 * 10 - 100px); /* Calculate top position */
+        right: 40px;
+        height: 100px; /* Calculate height for each branch */
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(11) {
+        top: calc(100% / 15 * 11 - 70px); /* Calculate top position */
+        right: -20px;
+        height: 70px; /* Calculate height for each branch */
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(12) {
+        top: calc(100% / 15 * 12 - 100px); /* Calculate top position */
+        right: 40px;
+        height: 100px; /* Calculate height for each branch */
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(13) {
+        top: calc(100% / 15 * 13 - 70px); /* Calculate top position */
+        right: -20px;
+        height: 70px; /* Calculate height for each branch */
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(14) {
+        top: calc(100% / 15 * 14 - 100px); /* Calculate top position */
+        right: 40px;
+        height: 100px; /* Calculate height for each branch */
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(15) {
+        top: calc(100% / 15 * 15 - 70px); /* Calculate top position */
+        right: -20px;
+        height: 70px; /* Calculate height for each branch */
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      #submit-button {
+        background-color: #2778c4;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5%;
+        display: inline-block;
+        font-size: 16px;
+        /* margin-bottom: 20px; Adjusted margin */
+        cursor: pointer;
+        position: absolute;
+        bottom: 110px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="third.html">རྩ་བ་དང་པོ</a>
+      <a href="index.html">རྩ་བ་གཉིས་པ</a>
+      <a class="active" href="second.html">རྩ་བ་གསུམ་པ</a>
+    </div>
+    <div class="tree-container">
+      <!-- First tree -->
+      <div class="tree" id="first_tree">
+        <div class="trunk">
+          <div class="branch"></div>
+          <div class="branch"></div>
+          <div class="branch"></div>
+          <div class="branch"></div>
+          <div class="branch"></div>
+          <div class="branch"></div>
+
+          <!-- <div class="branch three"></div> -->
+        </div>
+      </div>
+
+      <!-- Second tree -->
+      <div class="tree" id="second_tree">
+        <div class="trunk">
+          <div class="one branch"></div>
+          <div class="one branch"></div>
+          <div class="one branch"></div>
+        </div>
+      </div>
+
+      <!-- Third tree -->
+      <div class="tree" id="third_tree">
+        <div class="trunk">
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+        </div>
+      </div>
+      <div class="tree" id="fourth_tree">
+        <div class="trunk">
+          <div class="branch two"></div>
+          <div class="branch two"></div>
+          <div class="branch two"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="circle-container">
+      <div class="circle grey" draggable="true"></div>
+      <div class="circle black" draggable="true"></div>
+      <div class="circle orange" draggable="true"></div>
+    </div>
+    <button id="submit-button">Submit</button>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="logic.js"></script>
+    <script src="scripts2.js"></script>
+  </body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tree Puzzle</title>
+    <style>
+      /* Add any CSS styling here */
+      .tree-container {
+        display: flex;
+        justify-content: space-between; /* Distribute space between trees */
+        align-items: flex-end; /* Align trees to the bottom */
+        width: 100%; /* Ensure the container spans the full width */
+        margin-top: 50px;
+        position: relative;
+      }
+      #second_tree {
+        transform: rotate(-30deg);
+      }
+      #third_tree {
+        transform: rotate(30deg);
+      }
+      .tree {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px 100px 0;
+        position: relative;
+        margin: 100px auto 0 auto;
+      }
+
+      .trunk {
+        width: 13px;
+        height: 400px;
+        background-color: brown;
+        position: relative;
+        z-index: 2;
+      }
+
+      .branch {
+        width: 7px;
+        height: 220px;
+        background-color: brown;
+        position: absolute;
+      }
+
+      .circle-container {
+        display: flex;
+        gap: 10px;
+        position: absolute;
+        bottom: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        z-index: 3; /* Ensure circles are above branches */
+      }
+
+      .grey {
+        background-color: #dcdddd;
+      }
+
+      .black {
+        background-color: black;
+      }
+
+      .orange {
+        background-color: #eb8025;
+      }
+      .red {
+        background-color: #ff0505;
+      }
+      .redwhite {
+        border: 4px solid #ff0505;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%; /* To make it a circle */
+        background-color: white;
+      }
+
+      /* Adjusted z-index for branches */
+      .one:nth-child(2) {
+        top: 10px;
+        right: -50px;
+        height: 130px;
+        transform: rotate(60deg);
+        z-index: 1;
+      }
+      .navbar {
+        background-color: #2778c4;
+        overflow: hidden;
+      }
+
+      .navbar a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 1.5rem;
+      }
+      .active {
+        background-color: black;
+      }
+
+      .navbar a:hover {
+        background-color: #eb8025;
+      }
+      .one:nth-child(3) {
+        top: -40px;
+        right: 130px;
+        height: 300px;
+        transform: rotate(-60deg);
+        z-index: 1;
+      }
+
+      .one:nth-child(1) {
+        top: -10px;
+        right: 35px;
+        height: 70px;
+        transform: rotate(-60deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(1) {
+        top: calc(100% / 15 * 1 - 50px); /* Calculate top position */
+        right: 30px;
+        height: 70px; /* Calculate height for each branch */
+        transform: rotate(-60deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(2) {
+        top: calc(100% / 15 * 2 - 170px); /* Calculate top position */
+        right: -100px;
+        height: 230px; /* Calculate height for each branch */
+        transform: rotate(60deg);
+
+        z-index: 1;
+      }
+
+      .many:nth-child(3) {
+        top: calc(100% / 15 * 3 - 100px); /* Calculate top position */
+        right: 60px;
+        height: 130px; /* Calculate height for each branch */
+        transform: rotate(-60deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(4) {
+        top: calc(100% / 15 * 4 - 90px); /* Calculate top position */
+        right: -50px;
+        height: 120px; /* Calculate height for each branch */
+        transform: rotate(60deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(5) {
+        top: calc(100% / 15 * 5 - 240px); /* Calculate top position */
+        right: 150px;
+        height: 330px; /* Calculate height for each branch */
+        transform: rotate(-60deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(6) {
+        top: calc(100% / 15 * 6 - 80px); /* Calculate top position */
+        right: -50px;
+        height: 120px; /* Calculate height for each branch */
+        transform: rotate(60deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(7) {
+        top: calc(100% / 15 * 7 - 60px); /* Calculate top position */
+        right: 50px;
+        height: 100px; /* Calculate height for each branch */
+        transform: rotate(-60deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(8) {
+        top: calc(100% / 15 * 8 - 50px); /* Calculate top position */
+        right: -40px;
+        height: 100px; /* Calculate height for each branch */
+        transform: rotate(60deg);
+        z-index: 1;
+      }
+
+      .many:nth-child(9) {
+        top: calc(100% / 15 * 9 - 30px); /* Calculate top position */
+        right: 30px;
+        height: 70px; /* Calculate height for each branch */
+        transform: rotate(-60deg);
+        z-index: 1;
+      }
+
+      #submit-button {
+        background-color: #2778c4;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5%;
+        display: inline-block;
+        font-size: 16px;
+        /* margin-bottom: 20px; Adjusted margin */
+        cursor: pointer;
+        position: absolute;
+        bottom: 110px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a class="active" href="third.html">རྩ་བ་དང་པོ</a>
+      <a href="index.html">རྩ་བ་གཉིས་པ</a>
+      <a href="second.html">རྩ་བ་གསུམ་པ</a>
+    </div>
+    <div class="tree-container">
+      <!-- First tree -->
+
+      <!-- Second tree -->
+      <div class="tree" id="second_tree">
+        <div class="trunk">
+          <div class="one branch"></div>
+          <div class="one branch"></div>
+          <div class="one branch"></div>
+        </div>
+      </div>
+
+      <!-- Third tree -->
+      <div class="tree" id="third_tree">
+        <div class="trunk">
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+          <div class="branch many"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="circle-container">
+      <div class="circle grey" draggable="true"></div>
+      <div class="circle black" draggable="true"></div>
+      <div class="circle orange" draggable="true"></div>
+      <div class="circle red" draggable="true"></div>
+      <div class="circle redwhite" draggable="true"></div>
+    </div>
+    <button id="submit-button">Submit</button>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="logic.js"></script>
+    <script src="script3.js"></script>
+  </body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tree Puzzle</title>
+    <style>
+      img {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 200px; /* Set the width to make it smaller */
+        height: auto; /* Maintain aspect ratio */
+        position: fixed;
+      }
+      .nice {
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 500px; /* Set the width to make it smaller */
+        height: auto; /* Maintain aspect ratio */
+      }
+      .tree-container {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 50px;
+        position: relative;
+      }
+
+      .tree {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px 200px 0;
+        position: relative;
+      }
+
+      .trunk {
+        width: 20px;
+        height: 400px;
+        background-color: brown;
+        position: relative;
+        z-index: 2;
+      }
+
+      .branch {
+        width: 10px;
+        height: 250px;
+        background-color: brown;
+        position: absolute;
+      }
+
+      .circle-container {
+        display: flex;
+        gap: 10px;
+        position: absolute;
+        bottom: 160px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        z-index: 3; /* Ensure circles are above branches */
+      }
+
+      .grey {
+        background-color: #dcdddd;
+      }
+
+      .black {
+        background-color: black;
+      }
+
+      .orange {
+        background-color: #eb8025;
+      }
+
+      .branch:nth-child(1) {
+        top: -30px;
+        right: 90px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .branch:nth-child(2) {
+        top: 75px;
+        left: 90px;
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      .branch:nth-child(3) {
+        top: 120px;
+        right: 90px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .three:nth-child(1) {
+        top: 75px;
+        right: 90px;
+        transform: rotate(-40deg);
+        z-index: 1;
+      }
+
+      .three:nth-child(2) {
+        top: -30px;
+        right: 90px;
+        transform: rotate(40deg);
+        z-index: 1;
+      }
+
+      #submit-button {
+        background-color: #2778c4;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5%;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        position: absolute;
+        bottom: 110px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .navbar {
+        background-color: #2778c4;
+        overflow: hidden;
+      }
+
+      .navbar a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 1.5rem;
+      }
+      .active {
+        background-color: black;
+      }
+
+      .navbar a:hover {
+        background-color: #eb8025;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="third.html">རྩ་བ་དང་པོ</a>
+      <a class="active" href="index.html">རྩ་བ་གཉིས་པ</a>
+      <a href="second.html">རྩ་བ་གསུམ་པ</a>
+    </div>
+    <div class="tree-container">
+      <!-- First tree -->
+      <div class="tree" id="first_tree">
+        <div class="trunk">
+          <div class="branch three"></div>
+          <div class="branch three"></div>
+        </div>
+      </div>
+
+      <!-- Second tree -->
+      <div class="tree" id="second_tree">
+        <div class="trunk">
+          <div class="branch one g"></div>
+          <div class="branch one y"></div>
+          <div class="branch one b"></div>
+        </div>
+      </div>
+
+      <!-- Third tree -->
+      <div class="tree" id="third_tree">
+        <div class="trunk">
+          <div class="branch eleven g"></div>
+          <div class="branch seven y"></div>
+          <div class="branch eleven b"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="circle-container">
+      <div class="circle grey" draggable="true"></div>
+      <div class="circle black" draggable="true"></div>
+      <div class="circle orange" draggable="true"></div>
+    </div>
+
+    <button id="submit-button">Submit</button>
+    <img src="./cool1.png" alt="" />
+    <img class="nice" src="./nice.png" alt="" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- <script src="logic.js"></script> -->
+    <script src="script.js"></script>
+  </body>
+</html>
